@@ -1,0 +1,6 @@
+/.vscode
+/venv
+
+collectapi/*/__pycache__
+collectapi/*/migrations
+collectapi/db.sqlite3
