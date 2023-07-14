@@ -12,13 +12,14 @@ class Category(TimeStampedModel, SoftDeletableModel):
   def __str__(self) -> str:
       return self.name
 class SubCategory(TimeStampedModel, SoftDeletableModel):
-  category = models.ForeignKey(Category, on_delete=models.CASCADE)
+  category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subcategories')
   name = models.CharField(max_length=128)
   def __str__(self) -> str:
       return self.name
 
 class Miniature(TimeStampedModel, SoftDeletableModel):
-  category = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, blank=True)
+  category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+  subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, blank=True)
   name = models.CharField(max_length=32)
   width = models.DecimalField(decimal_places=1, max_digits=5)
   height = models.DecimalField(decimal_places=1, max_digits=5)
