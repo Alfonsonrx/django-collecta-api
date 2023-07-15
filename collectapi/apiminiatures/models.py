@@ -1,11 +1,10 @@
 from django.db import models
-
 from model_utils.models import SoftDeletableModel, TimeStampedModel
 
 def upload_to(instance, filename):
     return 'images/{filename}'.format(filename=filename)
-
 # Create your models here.
+host_address = "127.0.0.1"
 
 class Category(TimeStampedModel, SoftDeletableModel):
   name = models.CharField(max_length=128)
@@ -32,3 +31,10 @@ class Miniature(TimeStampedModel, SoftDeletableModel):
   likes = models.PositiveIntegerField(default=0)
   def __str__(self) -> str:
       return str(self.id)+"-"+self.name
+
+class MiniatureImage(models.Model):
+    miniature  = models.ForeignKey(Miniature, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=upload_to, blank=True, null=True)
+    
+    def __str__(self) -> str:
+        return "http://"+host_address+":8000/media/" + str(self.image)

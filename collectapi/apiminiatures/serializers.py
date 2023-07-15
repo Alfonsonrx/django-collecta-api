@@ -12,6 +12,8 @@ class CategorySerializer(serializers.ModelSerializer):
     fields = ['id', 'created', 'name', 'subcategories']
   subcategories = SubCategorySerializer(many=True)
 class MiniatureSerializer(serializers.ModelSerializer):
+  images = serializers.StringRelatedField(many=True)
+  
   class Meta:
     model = Miniature
     exclude = ['modified', 'is_removed']
